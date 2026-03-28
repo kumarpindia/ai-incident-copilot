@@ -1,0 +1,4 @@
+Incident ID: INC-2025-102
+Service: Payment Service
+Root Cause: Database connection pool exhaustion
+Resolution: Increased pool size and restarted pods
