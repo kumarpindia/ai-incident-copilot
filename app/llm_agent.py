@@ -1,12 +1,5 @@
 import os
 from openai import OpenAI
-from dotenv import load_dotenv, find_dotenv
-
-
-# Load environment variables (ensure the .env next to this file is used even if cwd differs)
-dotenv_path = find_dotenv(usecwd=True)
-if dotenv_path:
-    load_dotenv(dotenv_path)
     
 # Create OpenAI client (require API key)
 apikey = os.getenv("OPENAI_API_KEY")
