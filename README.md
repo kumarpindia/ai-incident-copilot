@@ -95,6 +95,11 @@ app/
   retriever.py       # Context retrieval logic
   llm_agent.py       # LLM prompt orchestration
 
+evaluation/
+  dataset.json       # Evaluation dataset
+  evaluate.py        # Evaluation runner
+  evaluator.py       # LLM-based scoring
+
 data/
   incidents/         # Incident reports
   logs/              # Application logs
@@ -149,7 +154,7 @@ streamlit run app/ui.py
 
 ---
 
-## 💬 Example Queries
+## Example Queries
 
 * "Why is the payment service failing?"
 * "Have we seen database timeout errors before?"
@@ -157,7 +162,7 @@ streamlit run app/ui.py
 
 ---
 
-## 📊 Example Output
+## Example Output
 
 ```
 Possible Root Cause:
@@ -171,6 +176,73 @@ Suggested Actions:
 - Restart affected service
 - Increase pool size if saturation observed
 ```
+
+---
+## Evaluation Framework
+
+This project includes a lightweight evaluation framework to assess the quality and reliability of the AI system.
+
+Unlike typical demo applications, this system is evaluated across multiple dimensions to ensure that responses are correct, grounded, and useful.
+
+---
+
+## Why Evaluation Matters
+
+LLM-based systems can produce fluent but incorrect or ungrounded responses. To move beyond demo-quality implementations, it is essential to introduce systematic evaluation.
+
+This project incorporates evaluation to:
+
+Measure answer correctness and completeness
+Detect potential hallucinations
+Validate retrieval effectiveness
+Enable iterative improvement of the system
+
+---
+
+## Evaluation Approach
+
+The evaluation framework follows a dataset-driven methodology:
+
+A set of predefined questions with expected answers is created
+The system generates responses using the full RAG pipeline
+An LLM-based evaluator scores the responses
+Aggregate metrics are computed
+
+---
+
+## Running Evaluation
+```bash
+python -m evaluation.evaluate
+```
+
+---
+
+## Example Evaluation Output
+```bash
+Question: Why is payment service failing?
+Expected: database connection pool exhaustion
+
+Actual: The issue is likely caused by database connection saturation...
+
+Score: 4/5
+Reason: Correct root cause identified but lacks detailed remediation steps.
+
+------------------------------
+Average Score: 4.2/5
+```
+---
+
+## Evaluation Dimensions
+* **Correctness** — Does the answer match the expected outcome?
+* **Completeness** — Does it cover all relevant aspects?
+* **Grounding** — Is the answer supported by retrieved context?
+* **Clarity** — Is the explanation actionable and understandable?
+
+
+## Evaluation Limitations
+* Dataset is small and synthetic
+* LLM-based scoring introduces some subjectivity
+* Retrieval-specific metrics (precision/recall) not yet implemented
 
 ---
 
@@ -198,17 +270,17 @@ This project intentionally focuses on **real-world engineering workflows**, not 
 
 * Uses synthetic / sample data (not real production telemetry)
 * Retrieval quality depends on chunking and data quality
-* No evaluation framework for answer accuracy (yet)
+* No automated retrieval metrics yet
 
 ---
 
 ## Future Improvements
 
-* Add embedding-based semantic retrieval (beyond keyword similarity)
-* Introduce evaluation metrics for response quality
-* Integrate real observability data sources (e.g., Prometheus, ELK)
-* Implement multi-agent workflow (retrieval + reasoning + validation agents)
-* Add feedback loop for continuous improvement
+* Add retrieval metrics (precision@k, recall@k)
+* Implement hallucination detection
+* Integrate real observability systems (Prometheus, ELK)
+* Add multi-agent workflow (retrieval + reasoning + validation)
+* Expand evaluation dataset
 
 ---
 
@@ -225,6 +297,6 @@ This project demonstrates how AI can be applied to **real operational problems**
 * LLM capabilities
 * Retrieval systems
 * Software architecture
-* Domain expertise in production systems
+* Evaluation and quality measurement
 
 ---
