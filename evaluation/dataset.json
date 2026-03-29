@@ -1,0 +1,10 @@
+[
+  {
+    "question": "Why is payment service failing?",
+    "expected_answer": "database connection pool exhaustion"
+  },
+  {
+    "question": "What causes high API latency?",
+    "expected_answer": "dependency slowdown or DB issues"
+  }
+]
